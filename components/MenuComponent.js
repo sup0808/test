@@ -16,7 +16,7 @@ class Menu extends React.Component{
 
     static navigationOptions= {
         title : 'Menu'
-    }
+    };
 
 
     

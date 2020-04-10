@@ -41,8 +41,8 @@ class Dishdetail extends React.Component{
     };
 
     static navigationOptions= {
-        title : 'Dishdetail'
-    }
+        title : 'Dish Details'
+    };
 
     render(){
         const dishId = this.props.navigation.getParam('dishId','')
