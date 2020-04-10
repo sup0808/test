@@ -27,8 +27,8 @@ import {
 
 const App: () => React$Node = () => {
   return (
-  //  <Text style={styles.footer}>Engine: f</Text>
-   <Main/>
+   // <Text style={styles.footer}>Engine: f</Text>
+  <Main/>
   );
 };
 
