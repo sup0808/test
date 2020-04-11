@@ -42,7 +42,9 @@ class Home extends React.Component{
     }
 
     static navigationOptions ={
-        title : 'Home'
+        title : 'Home',
+        headerStyle: { backgroundColor: '#fc8019' },
+        headerTitleStyle: { color: '#fff' },
     };
 
     render() {

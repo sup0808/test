@@ -15,7 +15,9 @@ class Menu extends React.Component{
 
 
     static navigationOptions= {
-        title : 'Menu'
+        title : 'Menu',
+        headerStyle: { backgroundColor: '#fc8019' },
+        headerTitleStyle: { color: '#fff' },
     };
 
 

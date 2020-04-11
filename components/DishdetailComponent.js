@@ -41,7 +41,9 @@ class Dishdetail extends React.Component{
     };
 
     static navigationOptions= {
-        title : 'Dish Details'
+        title : 'Dish Details',
+        headerStyle: { backgroundColor: '#fc8019' },
+        headerTitleStyle: { color: '#fff' },
     };
 
     render(){
