@@ -13,6 +13,10 @@ class Menu extends React.Component{
         };
     }
 
+    state ={avatar:""}
+
+    get avatarImage() {}
+
 
     static navigationOptions= {
         title : 'Menu',
@@ -24,8 +28,6 @@ class Menu extends React.Component{
     
     render(){
 
-     
-
         const renderMenuItem = ({item, index}) => {
             const { navigate } = this.props.navigation;
             return (
@@ -35,7 +37,8 @@ class Menu extends React.Component{
                         subtitle={item.description}
                         hideChevron={true}
                          onPress={() => navigate('Dishdetail', { dishId: item.id })}
-                        leftAvatar={{ source: require('./images/uthappizza.png')}}
+                       //  leftAvatar ={item.image}
+                       leftAvatar={{ source: require('./images/uthappizza.png')}}
                       />
             );
         };

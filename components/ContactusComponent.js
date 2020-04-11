@@ -14,7 +14,7 @@ class Contactus extends React.Component{
             <Card>
 
                 <Text style ={styles.headLine}>Contact Information</Text>
-                <View style={{borderBottomColor : 'black', borderBottomWidth :1}}/>
+                <View style={{borderBottomColor : '#e9e1f4', borderBottomWidth :1}}/>
                 <Text style ={styles.textStyle}>121, Clear Water Bay Road</Text>
                 <Text style ={styles.textStyle}>Clear Water Bay, Kowloon</Text>
                 <Text style ={styles.textStyle}>HONG KONG</Text>
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
   textStyle :{
       textAlign : 'left',
       fontSize    : 16,
-      marginTop : 10
+      marginTop : 20
   }
 
     
