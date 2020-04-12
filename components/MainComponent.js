@@ -8,7 +8,7 @@ import {createAppContainer} from 'react-navigation';
 import { createDrawerNavigator } from 'react-navigation-drawer';
 import Home from './HomeComponent';
 import About from './AboutComponent';
-import Contactus from './ContactusComponent';
+import Contactus from './ContactComponent';
 
 const HomeNavigator = createStackNavigator({
   Home: { screen: Home }
