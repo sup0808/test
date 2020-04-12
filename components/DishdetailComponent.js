@@ -19,6 +19,7 @@ function RenderComments(props){
                     <Text style={{fontSize :12}}>{'-- '+item.author + ' , ' + item.date}</Text>
                 </View>
             );
+            
     };
 
     return(
