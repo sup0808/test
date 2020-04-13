@@ -1,61 +1,174 @@
 import React, { Component } from 'react';
 import Menu from './MenuComponent';
-import { DISHES } from '../shared/dishes';
+
 import Dishdetail from './DishdetailComponent';
-import {View,Platform} from 'react-native'
 import {createStackNavigator} from 'react-navigation-stack';
-import {createAppContainer} from 'react-navigation';
-import { createDrawerNavigator } from 'react-navigation-drawer';
+import {createAppContainer,SafeAreaView} from 'react-navigation';
+import { createDrawerNavigator ,DrawerItems} from 'react-navigation-drawer';
 import Home from './HomeComponent';
 import About from './AboutComponent';
 import Contactus from './ContactComponent';
+import { Icon } from 'react-native-elements';
+import { ScrollView } from 'react-native-gesture-handler';
+import { View,StyleSheet , Text, Image} from 'react-native';
 
 const HomeNavigator = createStackNavigator({
-  Home: { screen: Home }
+  Home: { screen: Home,
+    navigationOptions :({navigation}) =>({
+      headerLeft : <Icon
+      name = 'menu' size ={24}
+      color ='white'
+      onPress={() =>navigation.toggleDrawer()}
+      />
+    }) }
 });
 
 const AboutNavigator = createStackNavigator({
-  Home: { screen: About }
+  Home: { screen: About ,
+    navigationOptions :({navigation}) =>({
+      headerLeft : <Icon
+      name = 'menu' size ={24}
+      color ='white'
+      onPress={() =>navigation.toggleDrawer()}
+      />
+    }) }
   });
 
 
 const ContactusNavigator = createStackNavigator({
-  Contactus: { screen: Contactus }
+  Contactus: { screen: Contactus,
+    navigationOptions :({navigation}) =>({
+      headerLeft : <Icon
+      name = 'menu' size ={24}
+      color ='white'
+      onPress={() =>navigation.toggleDrawer()}
+      />
+    }) }
 });
 
 const MenuNavigator = createStackNavigator({
-  Menu: { screen: Menu },
+  Menu: { screen: Menu,
+    navigationOptions :({navigation}) =>({
+      headerLeft : <Icon
+      name = 'menu' size ={24}
+      color ='white'
+      onPress={() =>navigation.toggleDrawer()}
+      />
+    })
+   },
   Dishdetail: { screen: Dishdetail }
+
 });
+
+const CustomDrawerContentComponent = (props) =>(
+  <ScrollView>
+    <SafeAreaView style={styles.container} forceInset={{ top: 'always', horizontal: 'never' }}>
+      <View style ={styles.drawerHeader}>
+        <View style = {{flex :1}}>
+        <Image source={require('./images/logo.png')} style={styles.drawerImage} />
+        </View>
+        <View style={{flex: 2}}>
+            <Text style={styles.drawerHeaderText}>Ristorante Con Fusion</Text>
+          </View>
+
+      </View>
+      <DrawerItems {...props} />
+
+    </SafeAreaView>
+  </ScrollView>
+);
+
+
    
 const MainNavigtor  = createDrawerNavigator({
   Home: {
       screen : HomeNavigator,
       navigationOptions:{
         title: 'Home',
+        drawerLabel : 'Home',
+        drawerIcon: ({ tintColor, focused }) => (
+          <Icon
+            name='home'
+            type='font-awesome'            
+            size={24}
+            color={tintColor}
+          />
+        )
       }
   },
   About :{
     screen : AboutNavigator,
     navigationOptions:{
-      title  : 'About Us'
+      title  : 'About Us',
+      drawerLabel : 'About Us',
+      drawerIcon: ({ tintColor, focused }) => (
+        <Icon
+          name='info-circle'
+          type='font-awesome'            
+          size={24}
+          color={tintColor}
+        />
+      )
     }
   },
   Contactus :{
     screen : ContactusNavigator,
     navigationOptions:{
-      title  : 'Contact us'
+      title  : 'Contact us',
+      drawerLabel : 'Contact us',
+      drawerIcon: ({ tintColor, focused }) => (
+        <Icon
+          name='address-card'
+          type='font-awesome'            
+          size={22}
+          color={tintColor}
+        />
+      )
     }
   },
   Menu :{
     screen : MenuNavigator,
     navigationOptions:{
-      title  : 'Menu'
+      title  : 'Menu',
+      drawerLabel : 'Menu',
+      drawerIcon: ({ tintColor, focused }) => (
+        <Icon
+          name='list'
+          type='font-awesome'            
+          size={24}
+          color={tintColor}
+        />
+      )
     }
   }
   },
   {
-    drawerBackgroundColor: '#D1C4E9'
+    drawerBackgroundColor: '#D1C4E9',
+    contentComponent: CustomDrawerContentComponent
+  });
+
+  const styles = StyleSheet.create({
+    container :{
+      flex: 1
+    },
+    drawerHeader: {
+      backgroundColor: '#512DA8',
+      height: 140,
+      alignItems: 'center',
+      justifyContent: 'center',
+      flex: 1,
+      flexDirection: 'row'
+    },
+    drawerHeaderText: {
+      color: 'white',
+      fontSize: 24,
+      fontWeight: 'bold'
+    },
+    drawerImage: {
+      margin: 10,
+      width: 80,
+      height: 60
+    }
   });
 
 
