@@ -34,12 +34,13 @@ export const addComments = (comments) => ({
 export const fetchDishes = () => (dispatch) => {
 
     dispatch(dishesLoading());
-
+    console.log(" dishes url "+ baseUrl + 'dishes');
     return fetch(baseUrl + 'dishes')
     .then(response => {
         if (response.ok) {
           return response;
         } else {
+            
           var error = new Error('Error ' + response.status + ': ' + response.statusText);
           error.response = response;
           throw error;

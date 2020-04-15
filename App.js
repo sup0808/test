@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler';
 import React from 'react';
 import Main from './components/MainComponent' 
-import {Provider} from 'react-redux';
+import { Provider } from 'react-redux';
 import { ConfigureStore } from './redux/configureStore';
 
 import {
@@ -21,16 +21,17 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-const store= ConfigureStore();
+const store = ConfigureStore();
 
 
 
 const App: () => React$Node = () => {
   return (
    // <Text style={styles.footer}>Engine: f</Text>
-   <Provider store= {store}>
-      <Main/>
-   </Provider>
+   <Provider store={store}>
+   <Main />
+ </Provider>
+ 
   
   );
 };
