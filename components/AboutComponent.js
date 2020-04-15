@@ -2,6 +2,14 @@ import React from 'react';
 import { Text, View,StyleSheet,FlatList ,ScrollView} from 'react-native';
 import {Card,ListItem} from 'react-native-elements';
 import { LEADERS } from '../shared/leaders';
+import { connect } from "react-redux";
+import { baseUrl } from "../shared/baseUrl";
+
+const mapStateToProps = state => {
+    return {
+      leaders: state.leaders
+    }
+  }
 
 class About extends React.Component{
 
@@ -11,13 +19,7 @@ class About extends React.Component{
         headerTitleStyle: { color: '#fff' },
     };
 
-    constructor(props){
-        super(props);
-        this.state = {
-            leaders: LEADERS
-        };
-
-    }
+   
 
     render(){
         return(
@@ -52,14 +54,16 @@ function Leader(props) {
                     title={item.name}
                     subtitle={item.description}
                     hideChevron={true}
-                    leftAvatar={{ source: require('./images/uthappizza.png')}}
+                    leftAvatar={{source : {uri : baseUrl + item.image}}}
+                   // leftAvatar={{ source: require('./images/uthappizza.png')}}
                   />
         );
     };
 
     return (
             <FlatList 
-                data={props.leaders}
+                //data={props.leaders}
+                data ={this.props.leaders.leaders}
                 renderItem={renderMenuItem}
                 keyExtractor={item => item.id.toString()}
                 />
@@ -82,4 +86,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default About;
+export default connect(mapStateToProps)(About);

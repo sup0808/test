@@ -1,36 +1,34 @@
 import * as ActionTypes from './ActionTypes';
-import {baseUrl} from '../shared/baseUrl';
-import { comments } from './comments';
+import { baseUrl } from '../shared/baseUrl';
 
-export const fetchComments = () => (dispatch) =>{
+export const fetchComments = () => (dispatch) => {
     return fetch(baseUrl + 'comments')
     .then(response => {
-        if(response.ok){
-            return response;
+        if (response.ok) {
+          return response;
+        } else {
+          var error = new Error('Error ' + response.status + ': ' + response.statusText);
+          error.response = response;
+          throw error;
         }
-        else{
-            var error  = new Error('Error ' + response.status + ': ' + response.statusText);
-
-        }
-    },
-    error =>{
-        var errMess = new Error(error.messgae)
-        throw errMess;
-    })
+      },
+      error => {
+            var errmess = new Error(error.message);
+            throw errmess;
+      })
     .then(response => response.json())
     .then(comments => dispatch(addComments(comments)))
-    .catch(error => dispatch(commentsFailed(error.messgae)))
+    .catch(error => dispatch(commentsFailed(error.message)));
+};
 
-}
-
-export const commentsFailed = (arrmess) => ({
-    type : ActionTypes.COMMENTS_FAILED,
-    payload :errmess
+export const commentsFailed = (errmess) => ({
+    type: ActionTypes.COMMENTS_FAILED,
+    payload: errmess
 });
 
-export const addComments = (comments) =>({
-    type : ActionTypes.ADD_COMMENTS,
-    payload : comments
+export const addComments = (comments) => ({
+    type: ActionTypes.ADD_COMMENTS,
+    payload: comments
 });
 
 export const fetchDishes = () => (dispatch) => {

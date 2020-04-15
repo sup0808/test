@@ -12,6 +12,26 @@ import { Icon } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
 import { View,StyleSheet , Text, Image} from 'react-native';
 
+import { connect } from "react-redux";
+import { fetchDishes, fetchComments, fetchPromos, fetchLeaders } from '../redux/ActionCreators';
+
+const mapStoeToProps = state =>{
+    return{
+        dishes : state.dishes,
+        promotions :state.promotions,
+        leaders : state.leaders
+    }
+}
+
+const mapDispahToProps = dispatch => {
+  return{
+    fetchDishes: () => dispatch(fetchDishes()),
+  fetchComments: () => dispatch(fetchComments()),
+  fetchPromos: () => dispatch(fetchPromos()),
+  fetchLeaders: () => dispatch(fetchLeaders()),
+  }
+}
+
 const HomeNavigator = createStackNavigator({
   Home: { screen: Home,
     navigationOptions :({navigation}) =>({
@@ -171,7 +191,26 @@ const MainNavigtor  = createDrawerNavigator({
     }
   });
 
+class Main extends React.Component{
 
-const Main = createAppContainer(MainNavigtor);
+  componentDidMount() {
+    console.log("Main compoenent");
+    this.props.fetchDishes();
+    this.props.fetchComments();
+    this.props.fetchPromos();
+    this.props.fetchLeaders();
+  }
+
+ 
+
+  render() {
+    const Navigator = createAppContainer(MainNavigtor);
+    return <Navigator />
+ }
+}
   
-export default Main;
+
+
+//const Main = createAppContainer(MainNavigtor);
+  
+export default connect(mapStoeToProps, mapDispahToProps)(Main);
