@@ -16,9 +16,13 @@ class Reservation extends Component{
         }
     }
 
+    
+
     static navigationOptions= {
-        title : 'Reserve Table'
-    }
+        title : 'Reserve Table',
+        headerStyle: { backgroundColor: '#fc8019' },
+        headerTitleStyle: { color: '#fff' },
+    };
 
     toggleModal(){
         this.setState({showModal : !this.state.showModal})

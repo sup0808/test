@@ -153,3 +153,14 @@ export const addFavorite = (dishId) => ({
     type: ActionTypes.ADD_FAVORITE,
     payload: dishId
 });
+
+export const postComment = (dishId,rating,author,comment) => (dispatch) =>{
+    setTimeout(()=>{
+        dispatch(addFavorite(dishId));
+    });
+}
+
+export const addComment = (dishId) => ({
+    type: ActionTypes.ADD_COMMENT,
+    payload: dishId
+});
