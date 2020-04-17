@@ -4,13 +4,21 @@ import { Card ,Icon} from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
 import { connect } from "react-redux";
 import { baseUrl } from "../shared/baseUrl";
+import { postFavorite } from '../redux/ActionCreators';
 
 const mapStoeToProps = state =>{
     return{
         dishes : state.dishes,
-        comments :state.comments
+        comments :state.comments,
+        favorites : state.favorites
     }
 }
+
+const mapDispatchToProps = dispatch =>( {
+        postFavorite: (dishId) =>dispatch(postFavorite(dishId))
+    });
+
+ 
 
 
 
@@ -91,6 +99,10 @@ class Dishdetail extends React.Component{
         this.setState({favorites: this.state.favorites.concat(dishId)});
     }
 
+  //  markFavorite(dishId){
+   //     this.props.postFavorite(dishId);
+  //  };
+
     static navigationOptions= {
         title : 'Dish Details',
         headerStyle: { backgroundColor: '#fc8019' },
@@ -117,4 +129,4 @@ class Dishdetail extends React.Component{
     
 }
 
-export default connect(mapStoeToProps)(Dishdetail);
+export default connect(mapStoeToProps,mapDispatchToProps)(Dishdetail);
