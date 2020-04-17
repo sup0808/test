@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, FlatList, Button } from 'react-native';
+import { View, FlatList, Button,Text } from 'react-native';
 import { Tile } from 'react-native-elements';
 import { connect } from "react-redux";
 import { baseUrl } from "../shared/baseUrl";

@@ -13,8 +13,8 @@ export const ConfigureStore = () => {
             dishes,
             comments,
             promotions,
-            leaders,
-            favorites
+            leaders
+
         }),
         applyMiddleware(thunk, logger)
     );
