@@ -97,6 +97,8 @@ function RenderDish(props) {
         }
 }
 
+
+
 class Dishdetail extends React.Component{
 
     constructor(props){

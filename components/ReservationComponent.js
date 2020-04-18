@@ -1,5 +1,5 @@
 import React ,{Component} from 'react';
-import {Text, View, ScrollView, StyleSheet, Picker, Switch, Button, Modal} from 'react-native';
+import {Text, View, ScrollView, StyleSheet, Picker, Switch, Button, Modal,Alert} from 'react-native';
 import {  Card} from 'react-native-elements';
 import DatePicker from 'react-native-datepicker';
 
@@ -113,6 +113,7 @@ class Reservation extends Component{
                     visible ={this.state.showModal}
                      onDismiss ={ () => this.toggleModal()}
                     onRequestClose = {() => this.toggleModal()}>
+
                 <View style = {styles.modal}>
                         <Text style = {styles.modalTitle}>Your Reservation</Text>
                         <Text style = {styles.modalText}>Number of Guests: {this.state.guests}</Text>
@@ -120,7 +121,25 @@ class Reservation extends Component{
                         <Text style = {styles.modalText}>Date and Time: {this.state.date}</Text>
                         
                         <Button 
-                            onPress = {() =>{this.toggleModal(); this.resetForm();}}
+                          //  onPress = {() =>{this.toggleModal(); this.resetForm();}}
+                          onPress ={() =>  {
+                              Alert.alert(
+                                  'Your Reservation?',
+                                  'Number of Guests: '+ this.state.guests
+                                     +"\n"+ 'Date and Time:'+ this.state.date
+                                   + "\n" + 'Smoking?' + this.state.smoking ,
+                                  [
+                                      {text : 'Cancel', onPress : () => console.log('Canecl Pressed'),
+                                        style : 'cancel'},
+                                    
+                                    {text : 'OK', onPress : () => console.log('OK Pressed'),
+                                    style : 'cancel'},
+
+                                  ],
+                                  {cancelable : false}
+
+                              );
+                          }}
                             color="#512DA8"
                             title="Close" 
                             />
