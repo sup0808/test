@@ -4,6 +4,8 @@ import {Card,ListItem} from 'react-native-elements';
 import { connect } from "react-redux";
 import { baseUrl } from "../shared/baseUrl";
 import { LEADERS } from "../shared/leaders";
+import * as Animatable from 'react-native-animatable';
+
 
 const mapStateToProps = state => {
     return {
@@ -27,18 +29,17 @@ class About extends React.Component{
 
     }
 
-   
-
     render(){
         return(
             <ScrollView>
+            <Animatable.View animation="fadeInDown" duration={2000} delay={1000}>
             <View style ={{flex:1}}>
             <Card>
                 <Text style ={styles.headLine}>Our History</Text>
                 <View style={{borderBottomWidth :1,borderBottomColor : '#e9e1f4'}} />
                 <Text style={styles.textStyle}>Started in 2010, Ristorante con Fusion quickly established itself as a culinary icon par excellence in Hong Kong. With its unique brand of world fusion cuisine that can be found nowhere else, it enjoys patronage from the A-list clientele in Hong Kong.  Featuring four of the best three-star Michelin chefs in the world, you never know what will arrive on your plate the next time you visit us.</Text>
                 <Text style={styles.textStyle}>The restaurant traces its humble beginnings to The Frying Pan, a successful chain started by our CEO, Mr. Peter Pan, that featured for the first time the world's best cuisines in a pan.
-</Text>
+                </Text>
             </Card>
 
             <Card>
@@ -47,6 +48,7 @@ class About extends React.Component{
                 <Leader leaders = {this.state.leaders} />
             </Card>
             </View>
+            </Animatable.View>
             </ScrollView>
         );
     }
@@ -62,8 +64,8 @@ function Leader(props) {
                     title={item.name}
                     subtitle={item.description}
                     hideChevron={true}
-                    leftAvatar={{source : {uri : baseUrl + item.image}}}
-                   // leftAvatar={{ source: require('./images/uthappizza.png')}}
+                   // leftAvatar={{source : {uri : baseUrl + item.image}}}
+                    leftAvatar={{ source: require('./images/alberto.png')}}
                   />
         );
     };
