@@ -147,16 +147,19 @@ export const postFavorite = (dishId)  => (dispatch) => {
 
     setTimeout(() => {
         dispatch(addFavorite(dishId));
-        //dispatch(addComment(dishId));
     }, 2000);
 };
 
 
 export const addFavorite = (dishId) => ({
     type: ActionTypes.ADD_FAVORITE,
-   //type: ActionTypes.ADD_COMMENT,
     payload: dishId
 });
+
+export const deleteFavorite = (dishId) => ({
+    type: ActionTypes.DELETE_FAVORITE,
+    payload: dishId
+}); 
 
 export const postComment = (dishId)  => (dispatch) => {
 
@@ -171,13 +174,3 @@ export const addComment = (dishId) => ({
     payload: dishId
 });
 
-/*export const postComment = (dishId,rating,author,comment) => (dispatch) =>{
-    setTimeout(()=>{
-        dispatch(addComment(dishId));
-    }); 
-}
-
-export const addComment = (dishId) => ({
-    type: ActionTypes.ADD_COMMENT,
-    payload: dishId,rating,author,comment
-});*/
