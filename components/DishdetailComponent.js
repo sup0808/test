@@ -1,23 +1,27 @@
 import React from 'react';
-import { Text, View, FlatList,Alert,Modal , StyleSheet, Button} from 'react-native';
+import { Text, View, FlatList,Alert,Modal , StyleSheet, Button, PanResponder} from 'react-native';
 import { Card ,Icon, Rating, Input} from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
 import { connect } from "react-redux";
 import { baseUrl } from "../shared/baseUrl";
 import { postFavorite } from '../redux/ActionCreators';
+import { postComment } from '../redux/ActionCreators';
+
 import * as Animatable from 'react-native-animatable';
+
 
 const mapStoeToProps = state =>{
     return{
         dishes : state.dishes,
         comments :state.comments,
-        favorites : state.favorites
+        favorites: state.favorites
     }
 }
 
-const mapDispatchToProps = dispatch =>( {
-        postFavorite: (dishId) =>dispatch(postFavorite(dishId))
-    });
+const mapDispatchToProps = dispatch => ({
+    postFavorite: (dishId) => dispatch(postFavorite(dishId))
+  //  postComment: (dishId) => dispatch(postComment(dishId))
+});
 
 
 function RenderComments(props){
@@ -51,11 +55,46 @@ function RenderComments(props){
 function RenderDish(props) {
 
     const dish = props.dish;
-   // const dish =0;
+  // const dish =0;
+
+ //  handleViewRef = ref =>this.View  = ref;
+
+   const recognizeDrag = ({ moveX, moveY, dx, dy }) => {
+    if ( dx < -200 )
+        return true;
+    else
+        return false;
+}
+
+   const panResponder = PanResponder.create({
+        onStartShouldSetPanResponder : (e, gestureState) =>{
+            return true;
+        },
+       /* onPanResponderGrant : () =>{
+            this.View.rubberBand(1000)
+            .then(endState => console.log(endState.finished ? 'finished' : 'cancelled'));
+        },*/
+        onPanResponderEnd : (e,gestureState) =>{
+            if(recognizeDrag(gestureState))
+
+            Alert.alert(
+                'Add Favorite',
+                'Are you sure you wish to add ' + dish.name + ' to favorite?',
+                [
+                {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+                {text: 'OK', onPress: () => {props.favorite ? console.log('Already favorite') : props.onPress()}},
+                ],
+                { cancelable: false }
+            );
+            return true;
+        }
+   });
     
         if (dish != null) {
             return(
-                <Animatable.View animation="fadeInDown" duration={2000} delay={1000}>
+                <Animatable.View animation="fadeInDown" duration={2000} delay={1000} 
+              //  ref={this.handleViewRef}
+                {...panResponder.panHandlers}>
                 <Card
                 featuredTitle={dish.name}
                 image={{ uri : baseUrl + dish.image}}>
@@ -108,6 +147,7 @@ class Dishdetail extends React.Component{
         window.DishDetails = this;
         this.state = {
             favorites :[],
+            comments :[],
             rating : 0,
             author : '',
             comment  : '',
@@ -125,12 +165,19 @@ class Dishdetail extends React.Component{
     }
 
     markFavorite(dishId){
-        this.setState({favorites: this.state.favorites.concat(dishId)});
+        console.log("ADd comment");
+        this.props.postFavorite(dishId);
+      //  this.setState({favorites: this.state.favorites.concat(dishId)});
     }
 
-  //  markFavorite(dishId){
-   //     this.props.postFavorite(dishId);
-  //  };
+    AddComment(dishId){
+       
+        this.props.postComment(dishId);
+    }
+
+    
+
+    
 
     static navigationOptions= {
         title : 'Dish Details',
@@ -143,7 +190,8 @@ class Dishdetail extends React.Component{
         return(
             <ScrollView>
             <RenderDish dish={this.props.dishes.dishes[+dishId]}
-                favorite={this.state.favorites.some(el => el === dishId)}
+                favorite={this.props.favorites.some(el => el === dishId)}
+               // favorite={this.state.favorites.some(el => el === dishId)}
                 onPress={() => this.markFavorite(dishId)} 
                 />
 

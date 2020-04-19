@@ -12,6 +12,7 @@ import { Icon } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
 import { View,StyleSheet , Text, Image} from 'react-native';
 import Reservation from './ReservationComponent';
+import Favorites from './FavoriteComponent';
 
 import { connect } from 'react-redux';
 import { fetchDishes, fetchComments, fetchPromos, fetchLeaders } from '../redux/ActionCreators';
@@ -79,6 +80,17 @@ const MenuNavigator = createStackNavigator({
 
 });
 
+const FavoritesNavigator = createStackNavigator({
+  Favorites: { screen: Favorites ,
+navigationOptions :({navigation}) =>({
+  headerLeft : <Icon
+  name = 'menu' size ={24}
+  color ='white'
+  onPress={() =>navigation.toggleDrawer()}
+  />
+})
+}});
+
 
 
 const ReservationNavigator = createStackNavigator({
@@ -145,21 +157,6 @@ const MainNavigtor  = createDrawerNavigator({
       )
     }
   },
-  Reservation:{
-     screen: ReservationNavigator,
-      navigationOptions: {
-        title: 'Reserve Table',
-        drawerLabel: 'Reserve Table',
-        drawerIcon: ({ tintColor, focused }) => (
-          <Icon
-            name='cutlery'
-            type='font-awesome'            
-            size={24}
-            iconStyle={{ color: tintColor }}
-          />
-        ),
-      }
-  },
   Contactus :{
     screen : ContactusNavigator,
     navigationOptions:{
@@ -188,6 +185,36 @@ const MainNavigtor  = createDrawerNavigator({
           color={tintColor}
         />
       )
+    }
+  },
+  Reservation:{
+    screen: ReservationNavigator,
+     navigationOptions: {
+       title: 'Reserve Table',
+       drawerLabel: 'Reserve Table',
+       drawerIcon: ({ tintColor, focused }) => (
+         <Icon
+           name='cutlery'
+           type='font-awesome'            
+           size={24}
+           iconStyle={{ color: tintColor }}
+         />
+       ),
+     }
+ },
+  Favorites:
+  { screen: FavoritesNavigator,
+    navigationOptions: {
+      title: 'My Favorites',
+      drawerLabel: 'My Favorites',
+      drawerIcon: ({ tintColor, focused }) => (
+        <Icon
+          name='heart'
+          type='font-awesome'            
+          size={24}
+          iconStyle={{ color: tintColor }}
+        />
+      ),
     }
   }
   },

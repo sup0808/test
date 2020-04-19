@@ -143,18 +143,35 @@ export const addLeaders = (leaders) => ({
     payload: leaders
 });
 
-export const postFavorite = (dishId) =>(dispatch) =>{
+export const postFavorite = (dishId)  => (dispatch) => {
+
     setTimeout(() => {
         dispatch(addFavorite(dishId));
-    },2000 );
-}
+        //dispatch(addComment(dishId));
+    }, 2000);
+};
+
 
 export const addFavorite = (dishId) => ({
     type: ActionTypes.ADD_FAVORITE,
+   //type: ActionTypes.ADD_COMMENT,
     payload: dishId
 });
 
-export const postComment = (dishId,rating,author,comment) => (dispatch) =>{
+export const postComment = (dishId)  => (dispatch) => {
+
+    setTimeout(() => {
+        dispatch(addComment(dishId));
+    }, 2000);
+};
+
+
+export const addComment = (dishId) => ({
+    type: ActionTypes.ADD_COMMENT,
+    payload: dishId
+});
+
+/*export const postComment = (dishId,rating,author,comment) => (dispatch) =>{
     setTimeout(()=>{
         dispatch(addComment(dishId));
     }); 
@@ -163,4 +180,4 @@ export const postComment = (dishId,rating,author,comment) => (dispatch) =>{
 export const addComment = (dishId) => ({
     type: ActionTypes.ADD_COMMENT,
     payload: dishId,rating,author,comment
-});
+});*/
