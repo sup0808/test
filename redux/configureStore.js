@@ -6,9 +6,12 @@ import { comments } from './comments';
 import { promotions } from './promotions';
 import { leaders } from './leaders';
 import { favorites } from './favorites';
+import { persistStore, persistCombineReducers } from 'redux-persist';
+import storage from 'redux-persist/es/storage';
 
 
 export const ConfigureStore = () => {
+    
     const store = createStore(
         combineReducers({
             dishes,

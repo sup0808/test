@@ -13,6 +13,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { View,StyleSheet , Text, Image} from 'react-native';
 import Reservation from './ReservationComponent';
 import Favorites from './FavoriteComponent';
+import Login from './LoginComponent';
 
 import { connect } from 'react-redux';
 import { fetchDishes, fetchComments, fetchPromos, fetchLeaders } from '../redux/ActionCreators';
@@ -32,6 +33,19 @@ const mapDispatchToProps = dispatch => ({
   fetchPromos: () => dispatch(fetchPromos()),
   fetchLeaders: () => dispatch(fetchLeaders()),
 })
+
+const LoginNavigator = createStackNavigator({
+  Login : { screen : Login,
+    navigationOptions :({navigation}) =>({
+      headerLeft :<Icon
+      name = 'menu' size= {24} color= 'white'
+      onPress={()=>navigation.toggleDrawer()}
+      />
+    })
+
+  }
+});
+
 const HomeNavigator = createStackNavigator({
   Home: { screen: Home,
     navigationOptions :({navigation}) =>({
@@ -127,6 +141,23 @@ const CustomDrawerContentComponent = (props) =>(
 
    
 const MainNavigtor  = createDrawerNavigator({
+
+  Login: {
+    screen : LoginNavigator,
+    navigationOptions:{
+      title: 'Login',
+      drawerLabel : 'Login',
+      drawerIcon: ({ tintColor, focused }) => (
+        <Icon
+          name='sign-in'
+          type='font-awesome'            
+          size={24}
+          color={tintColor}
+        />
+      )
+    }
+},
+
   Home: {
       screen : HomeNavigator,
       navigationOptions:{
@@ -219,6 +250,7 @@ const MainNavigtor  = createDrawerNavigator({
   }
   },
   {
+    initialRouteName: 'Home',
     drawerBackgroundColor: '#D1C4E9',
     contentComponent: CustomDrawerContentComponent
   });
