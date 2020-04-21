@@ -2,6 +2,10 @@ import React ,{Component} from 'react';
 import {Text, View, ScrollView, StyleSheet, Picker, Switch, Button, Modal,Alert, Animated, Easing} from 'react-native';
 import {  Card} from 'react-native-elements';
 import DatePicker from 'react-native-datepicker';
+import {  Notifications} from 'expo';
+import * as Permissions from 'expo-permissions';
+
+
 
 class Reservation extends Component{
 
@@ -57,6 +61,38 @@ class Reservation extends Component{
             date: '',
             showModal: false
         });
+    }
+
+    async obtainNotificationPermission(){
+        console.log("obtainNotificationPermission 1");
+        let permission = await Permissions.getAsync(Permissions.USER_FACING_NOTIFICATIONS);
+        if (permission.status !== 'granted') {
+            console.log("obtainNotificationPermission 2");
+            permission = await Permissions.askAsync(Permissions.USER_FACING_NOTIFICATIONS);
+            if (permission.status !== 'granted') {
+                console.log("obtainNotificationPermission 3");
+                Alert.alert('Permission not granted to show notifications');
+            }
+        }
+        return permission;
+    }
+
+    async presentLocalNotification(date){
+        console.log("presentLocalNotification 1");
+        await this.obtainNotificationPermission();
+        Notifications.presentLocalNotificationAsync({
+            title : 'Your Reservation',
+            body: 'Reservation for '+ date + ' requested',
+            ios :{
+                sound : true
+            },
+            android :{
+                sound: true,
+                vibrate: true,
+                color: '#512DA8'
+            }
+        });
+        console.log("presentLocalNotification 2");
     }
     
 
@@ -168,10 +204,13 @@ class Reservation extends Component{
                                      +"\n"+ 'Date and Time:'+ this.state.date
                                    + "\n" + 'Smoking?' + this.state.smoking ,
                                   [
-                                      {text : 'Cancel', onPress : () =>this.resetForm(),
+                                      {text : 'Cancel', onPress : () =>
+                                      this.resetForm(),
+                                
                                         style : 'cancel'},
                                     
-                                    {text : 'OK', onPress : () => this.resetForm(),
+                                    {text : 'OK', onPress : () =>
+                                    this.presentLocalNotification(this.state.date),
                                     style : 'cancel'},
 
                                   ],
