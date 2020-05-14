@@ -1,16 +1,35 @@
-import 'react-native-gesture-handler';
 import React from 'react';
-import Main from './components/MainComponent' 
-import { Provider } from 'react-redux';
-import { ConfigureStore } from './redux/configureStore';
+import { StyleSheet, Text, View,Image,TextInput, ImageBackground,StatusBar,TouchableOpacity } from 'react-native';
+import {Card,Input} from 'react-native-elements';
+import Constants from 'expo-constants';
+import Login from './components/LoginComponent';
+import Main from './components/MainComponent';
+import Dashboard from './components/DashboardComponent';
+import {createAppContainer,SafeAreaView, createSwitchNavigator} from 'react-navigation';
 
+//import {GetStatusBar} from './components/StatusBarComponent';
 
-const store = ConfigureStore();
+console.warn = () => {}
+ class App extends React.Component {
 
-export default function App() {
-  return (
-    <Provider store={store}>
-   <Main />
- </Provider>
+  render(){
+    const Navigator = createAppContainer(LoginStackNavigator);
+    return(
+      <Navigator/>
+    );
+  }
+ }
+
+ const LoginStackNavigator = createSwitchNavigator(
+  {
+    Login: { screen: Login },
+    Main: { screen: Main },
+   // Dashboard: { screen: Dashboard },
+  },
+  {
+      initialRouteName: 'Login',
+  }
+  
   );
-}
+
+ export default App;

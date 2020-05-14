@@ -1,105 +1,153 @@
 import React from 'react';
-import { View, Button,StyleSheet} from 'react-native';
-import {Card ,Icon, CheckBox ,Input} from 'react-native-elements';
-import * as SecureStore from 'expo-secure-store';
+import { StyleSheet, Text, View,Image,TextInput, ImageBackground,StatusBar,TouchableOpacity,Dimensions } from 'react-native';
+import * as Animatable from 'react-native-animatable';
 
-class Login extends React.Component{
+const fullwidth = Dimensions.get('window').width;
 
-    static navigationOptions  ={
-        title : 'Login',
-        headerStyle: { backgroundColor: '#fc8019' },
-        headerTitleStyle: { color: '#fff' },
+
+ class Login extends React.Component {
+
+ 
+  constructor(props){
+    super(props);
+    this.state = {
+      username : '',
+      password : ''
     }
+}
 
-    constructor(props){
-        super(props);
-        this.state={
-            username : '',
-            password : '',
-            remember : false
-        }
-    }
+  render(){
 
-    componentDidMount(){
-        SecureStore.getItemAsync('userinfo')
-        .then((userdata) => {
-            let userinfo = JSON.parse(userdata);
-            if(userinfo){
-              
-                this.setState({username :userinfo.username});
-                this.setState({password :userinfo.password});
-                this.setState({remember: true})
-            }
-        })
-    }
+    //const {navigate} = this.props.navigation;
 
-    handleLogin(){
-        console.log(JSON.stringify(this.state));
-        if(this.state.remember){
-            console.log("add Item");
-            SecureStore.setItemAsync('userinfo', JSON.stringify({username: this.state.username,
-                 password: this.state.password}))
-            .catch((error) => console.log('Could not save user info', error));
-        }
-        else{
-            console.log("Delete Item");
-            SecureStore.deleteItemAsync('userinfo').
-            catch((error) => console.log('Could not delete user info',error));
-        }
-    }
+  return (
+    
+    <View style ={{flex : 1}}>
+     <StatusBar backgroundColor = "#e41420" barStyle ="default" translucent ={true}  />
+        <ImageBackground source ={require("../assets/bg.png")} style={styles.backgroundImageStyle}>
 
-    render(){
-        return(
-            <View>
-                <Input
-                placeholder = "Username"
-                leftIcon = {{ type : 'font-awesome', name:'user-o'}}
-                onChangeText = {(username) => this.setState({username})}
-                value ={this.state.username}
-                containerStyle = {styles.formInput}
-                 />
-                 <Input
-                placeholder = "Password"
-                leftIcon = {{ type : 'font-awesome', name:'key'}}
-                onChangeText = {(password) => this.setState({password})}
-                value ={this.state.password}
-                containerStyle = {styles.formInput}
-                 />
+        <Animatable.View animation="fadeInUp" duration={2000} delay={1000}>
+          <View style ={{ backgroundColor:"#ffffff", borderRadius : 15,width:fullwidth-80,marginTop:100} }>
 
-                 <CheckBox
-                 title ="Remember Me"
-                 center
-                 checked ={this.state.remember}
-                 onPress={()=>this.setState({remember : !this.state.remember})}
-                 containerStyle = {styles.formCheckbox}
-                 />
+            
+              <View style = {{ margin: 20}} >
+              <Text style ={styles.headLine}>Login</Text>
 
-                 <View style ={styles.formButton} >
-                    <Button onPress ={() => this.handleLogin()}
-                    title ="Login"
-                    color="#512DA8"/>
-                 </View>
+              <View style={styles.SectionStyle}>
+              <Image
+                source={require('../assets/user.png')} //Change your icon image here
+                style={styles.ImageStyle}
+               />
 
-            </View>
-        );
-    }
+              <TextInput
+              style={{ flex: 1 }}
+              placeholder="Email"
+              underlineColorAndroid="transparent"
+              />
+              </View>
+              <View style={{borderBottomColor : '#000000', borderBottomWidth :.5}}/>
+
+              <View style={styles.SectionStyle}>
+              <Image
+                source={require('../assets/password.png')} //Change your icon image here
+                style={styles.ImageStyle}
+               />
+
+              <TextInput
+              style={{ flex: 1 }}
+              placeholder="Password"
+              underlineColorAndroid="transparent"
+              />
+              </View>
+
+              <View style={{borderBottomColor : '#000000', borderBottomWidth :.5}}/>
+
+              <TouchableOpacity
+               style={styles.SubmitButtonStyle}
+               activeOpacity = { .5 }
+               onPress={() => this.props.navigation.navigate('Main')}
+               //onPress={() => this.props.navigation.navigate('Dashboard')}
+               
+               >
+ 
+                <Text style={styles.TextStyle}> SIGN IN </Text>
+            
+             </TouchableOpacity>
+              </View> 
+          </View>
+          </Animatable.View>
+         <Text style ={{color: '#ffffff', position : 'absolute', bottom : 0,marginBottom : 10}}>
+           Marcarus Co-operative Limited. All Rights Reserved. </Text>
+      
+        </ImageBackground>
+    </View>
+
+  );
+ }
+}
+
+function LoginForm(props){
 
 }
 
 const styles = StyleSheet.create({
-    container: {
-        justifyContent : 'center',
-        margin : 20
-    },
-    formInput: {
-        margin : 40
-    },
-    formCheckbox :{
-        margin : 40
-    },
-    formButton :{
-        margin :60
-    }
+  headLine : {
+    textAlign : 'center',
+    fontWeight : 'bold',
+    fontSize :19,
+    marginTop: 10,
+    marginBottom : 10
+},
+  
+  backgroundImageStyle :{
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  cardStyle :{
+    alignItems : 'center',
+    margin : 20
+  },
+  SectionStyle: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+   // borderWidth: 0.5,
+    borderColor: '#000',
+  
+    borderRadius: 5,
+    marginTop: 25,
+},
+ImageStyle: {
+    padding: 10,
+    margin: 5,
+    height: 25,
+    width: 25,
+    resizeMode: 'stretch',
+    alignItems: 'center',
+},
+SubmitButtonStyle: {
+ 
+  marginTop:35,
+  marginBottom: 30,
+  paddingTop:10,
+  paddingBottom:10,
+  marginLeft:30,
+  marginRight:30,
+  backgroundColor:'#e41420',
+  borderRadius:20,
+  borderWidth: 1,
+  borderColor: '#fff'
+},
+
+TextStyle:{
+    color:'#fff',
+    textAlign:'center',
+}
 });
+
+
 
 export default Login;
